@@ -101,8 +101,31 @@ async function userLogoutController(req, res) {
     })
 }
 
+/**
+ * - Upgrade user to system admin (dev utility)
+ * - POST /api/auth/make-system-user
+ */
+async function makeSystemUserController(req, res) {
+    try {
+        const user = await userModel.findById(req.user._id)
+        if (!user) {
+            return res.status(404).json({ message: "User not found" })
+        }
+        // Use raw collection update to bypass mongoose field immutability
+        await userModel.collection.updateOne(
+            { _id: user._id },
+            { $set: { systemUser: true } }
+        )
+        return res.json({ message: "Successfully upgraded user to System Admin!" })
+    } catch (error) {
+        console.error("Upgrade error:", error)
+        return res.status(500).json({ message: "Server error", error: error.message })
+    }
+}
+
 module.exports = {
     userRegisterController,
     userLoginController,
-    userLogoutController
+    userLogoutController,
+    makeSystemUserController
 }

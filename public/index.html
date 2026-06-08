@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Ledger | Professional Digital Banking</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Toast Notification System -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Loading State Overlay -->
+  <div id="loading-overlay" class="loading-overlay hidden">
+    <div class="spinner-container">
+      <div class="spinner"></div>
+      <p id="loading-text">Processing request...</p>
+    </div>
+  </div>
+
+  <!-- Primary Wrapper -->
+  <main id="app-container" class="app-container">
+    
+    <!-- ==================== AUTHENTICATION SECTION ==================== -->
+    <section id="auth-section" class="auth-section">
+      <div class="auth-card glass">
+        <div class="auth-header">
+          <div class="logo">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            <span class="logo-text">AURA LEDGER</span>
+          </div>
+          <h1 id="auth-title">Welcome Back</h1>
+          <p id="auth-subtitle">Access your secure digital banking ledger</p>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form">
+          <div class="input-group">
+            <label for="login-email">Email Address</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <input type="email" id="login-email" required placeholder="name@example.com">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="login-password">Password</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input type="password" id="login-password" required placeholder="••••••••">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+          <p class="auth-toggle-text">Don't have an account? <a href="#" id="toggle-to-register">Create one</a></p>
+        </form>
+
+        <!-- Register Form (Hidden by default) -->
+        <form id="register-form" class="auth-form hidden">
+          <div class="input-group">
+            <label for="register-name">Full Name</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              <input type="text" id="register-name" required placeholder="John Doe">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="register-email">Email Address</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <input type="email" id="register-email" required placeholder="name@example.com">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="register-password">Password</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input type="password" id="register-password" required placeholder="Min 6 characters">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+          <p class="auth-toggle-text">Already have an account? <a href="#" id="toggle-to-login">Sign In</a></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ==================== DASHBOARD SECTION ==================== -->
+    <section id="dashboard-section" class="dashboard-section hidden">
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar glass">
+        <div class="sidebar-header">
+          <div class="logo">
+            <svg class="logo-icon animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            <span class="logo-text">AURA LEDGER</span>
+          </div>
+        </div>
+        <div class="user-profile">
+          <div class="avatar" id="user-avatar">U</div>
+          <div class="user-info">
+            <h3 id="user-display-name">Loading...</h3>
+            <p id="user-display-email">Loading...</p>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <button class="nav-item active" data-tab="overview">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="9"/>
+              <rect x="14" y="3" width="7" height="5"/>
+              <rect x="14" y="12" width="7" height="9"/>
+              <rect x="3" y="16" width="7" height="5"/>
+            </svg>
+            Overview
+          </button>
+          <!-- System user indicator badge -->
+          <div id="system-badge-container" class="system-badge hidden">
+            <span class="badge-dot"></span>
+            System Admin Authorized
+          </div>
+        </nav>
+        <button id="logout-btn" class="logout-btn">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+          </svg>
+          Logout
+        </button>
+      </aside>
+
+      <!-- Main Dashboard Area -->
+      <div class="main-content">
+        <!-- Top bar -->
+        <header class="main-header">
+          <div class="header-greeting">
+            <h2>Dashboard Overview</h2>
+            <p class="text-secondary" id="today-date"></p>
+          </div>
+          <div class="header-actions">
+            <!-- Test faucet button for setting systemUser flag directly on current user -->
+            <button id="system-faucet-btn" class="btn btn-secondary flex-center">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+              Enable Admin Faucet
+            </button>
+            <button id="create-account-btn" class="btn btn-primary flex-center">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              Create Account
+            </button>
+          </div>
+        </header>
+
+        <!-- Dynamic Grid Layout -->
+        <div class="dashboard-grid">
+          
+          <!-- Primary Account Card Display -->
+          <div class="card card-account-primary gradient-card">
+            <div class="card-glow"></div>
+            <div class="card-inner">
+              <div class="card-top">
+                <span class="bank-card-title">LEDGER CARD</span>
+                <span class="currency-tag" id="primary-card-currency">INR</span>
+              </div>
+              <div class="card-middle">
+                <p class="balance-label">ACCOUNT BALANCE</p>
+                <h1 class="balance-amount" id="primary-card-balance">₹0.00</h1>
+              </div>
+              <div class="card-bottom">
+                <div class="card-holder">
+                  <p class="label-tiny">CARDHOLDER</p>
+                  <p class="holder-name" id="primary-card-holder-name">Loading...</p>
+                </div>
+                <div class="card-number-wrapper">
+                  <p class="label-tiny">ACCOUNT ID</p>
+                  <p class="card-number" id="primary-card-id">•••• •••• •••• ••••</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transaction / Transfer Portal -->
+          <div class="card card-transfer glass-card">
+            <h3>Send Ledger Funds</h3>
+            <p class="text-secondary text-small">Transfer balance immediately between ledger accounts</p>
+            
+            <form id="transfer-form" class="transfer-form">
+              <div class="input-group">
+                <label for="transfer-from">Source Account</label>
+                <div class="select-wrapper">
+                  <select id="transfer-from" required>
+                    <option value="" disabled selected>Select Source Account</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="input-group">
+                <label for="transfer-to">Recipient Account ID</label>
+                <div class="input-wrapper">
+                  <input type="text" id="transfer-to" required placeholder="e.g. 6a25b1991d0d9040...">
+                </div>
+              </div>
+
+              <div class="input-group">
+                <label for="transfer-amount">Amount (INR)</label>
+                <div class="input-wrapper">
+                  <span class="input-prefix">₹</span>
+                  <input type="number" id="transfer-amount" required min="1" placeholder="0.00">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block">Confirm Transfer</button>
+            </form>
+          </div>
+
+          <!-- Seeding Portal (Initial Funds) -->
+          <div class="card card-faucet glass-card">
+            <div class="card-badge">ADMIN ONLY</div>
+            <h3>Faucet Seeding Portal</h3>
+            <p class="text-secondary text-small">Inject initial credit ledger entries into any active account</p>
+            
+            <form id="faucet-form" class="transfer-form">
+              <div class="input-group">
+                <label for="faucet-to">Target Account ID</label>
+                <div class="input-wrapper">
+                  <input type="text" id="faucet-to" required placeholder="e.g. 6a25b1991d0d9040...">
+                </div>
+              </div>
+
+              <div class="input-group">
+                <label for="faucet-amount">Seed Amount (INR)</label>
+                <div class="input-wrapper">
+                  <span class="input-prefix">₹</span>
+                  <input type="number" id="faucet-amount" required min="1" placeholder="5000">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-secondary btn-block">Inject Initial Funds</button>
+            </form>
+          </div>
+
+          <!-- Accounts Overview List -->
+          <div class="card card-accounts-list glass-card full-width">
+            <div class="card-title-row">
+              <h3>Associated Accounts</h3>
+              <span class="count-badge" id="account-count">0</span>
+            </div>
+            
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Account ID</th>
+                    <th>Currency</th>
+                    <th>Status</th>
+                    <th>Calculated Balance</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="accounts-table-body">
+                  <tr>
+                    <td colspan="5" class="text-center text-secondary">No active accounts. Create one to begin.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Ledger Entries View -->
+          <div class="card card-ledger glass-card full-width">
+            <div class="card-title-row">
+              <h3>Ledger Registry Log</h3>
+              <div class="select-wrapper select-small">
+                <select id="ledger-account-select">
+                  <option value="" disabled selected>Filter by Account</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Transaction ID</th>
+                    <th>idempotencyKey</th>
+                  </tr>
+                </thead>
+                <tbody id="ledger-table-body">
+                  <tr>
+                    <td colspan="4" class="text-center text-secondary">Select an account to view ledger history.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+  
+  <!-- Core SPA Client Script -->
+  <script src="js/app.js"></script>
+</body>
+</html>
